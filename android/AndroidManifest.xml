@@ -11,16 +11,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:isGame="true"
         android:theme="@android:style/Theme.Light.NoTitleBar"
         tools:replace="android:icon">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AndroidLauncher" />
+        <activity android:name=".activity.RoomActivity"/>
+        <activity
+            android:name=".AndroidLauncher"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

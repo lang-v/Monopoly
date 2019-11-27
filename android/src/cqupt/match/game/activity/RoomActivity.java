@@ -1,5 +1,6 @@
 package cqupt.match.game.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,24 +15,27 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import cqupt.match.game.AndroidLauncher;
 import cqupt.match.game.R;
 import cqupt.match.game.adapter.PlayerNameAdapter;
 import cqupt.match.game.getlocalhost.NetWorkUtil;
 import cqupt.match.game.playeritem.PlayerItem;
-import cqupt.match.monopoly.gameclient.GameClient;
+import cqupt.match.game.gameclient.GameClient;
 import cqupt.match.game.gameserver.GameServer;
 import cqupt.match.game.gameserver.OnAddPlayer;
+import cqupt.match.game.resource.Res;
 
-public class RoomActivity extends AppCompatActivity {
+public class RoomActivity extends Activity {
 
     //服务器实例
     private GameServer gameServer = null;
 
     //客户端实例
-    private static GameClient gameClient = null;
+    private GameClient gameClient = null;
 
     //姓名和房间地址
     private static String uName ="";
@@ -92,21 +96,18 @@ public class RoomActivity extends AppCompatActivity {
         init();
     }
 
+    public static List<PlayerItem> getPlayers(){
+        return players;
+    }
+
     private void init() {
         //绑定控件
         players = new ArrayList<>();
         listView = findViewById(R.id.player_list);
         adapter = new PlayerNameAdapter(this, R.layout.palyer_item, players,addPlayerCallBack);
-        players.add(new PlayerItem("s", 0));
-        players.add(new PlayerItem("s", 0));
-        players.add(new PlayerItem("s", 0));
-        players.add(new PlayerItem("s", 0));
-        players.add(new PlayerItem("s", 0));
+        players.add(new PlayerItem("s",1));
         listView.setAdapter(adapter);
-        if ("".equals(uIp)) {
-            if (gameServer == null && gameClient == null) {
-               gameClient = new GameClient();
-            }
+        if ("".equals(uIp)) {//服务器在本地的情况
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -128,7 +129,7 @@ public class RoomActivity extends AppCompatActivity {
                 public void run() {
                     try {
                         gameServer = new GameServer(addPlayerCallBack);
-                        gameClient = new GameClient();
+                        gameClient = new GameClient(getuName(),"127.0.0.1");
                     } catch (IOException e) {
                         Log.e("SL","未能成功开启服务");
                     }
@@ -138,7 +139,7 @@ public class RoomActivity extends AppCompatActivity {
             listenTask.start();
         } else {
             if (gameClient == null)
-                gameClient = new GameClient();
+                gameClient = new GameClient(uName,uIp);
             TextView text_ip = findViewById(R.id.room_number);
             text_ip.setText(uIp);
         }
@@ -146,10 +147,16 @@ public class RoomActivity extends AppCompatActivity {
         text_name.setText(uName);
 
         Button begin = findViewById(R.id.begin_game);
+        final Context context = this;
         begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //gameClient.sendMsg("start");
+                Intent intent = new Intent(context, AndroidLauncher.class);
+                Log.e("SL",players.size()+"");
+                intent.putExtra(Res.PLAYER_NUMBER,players.size());
+                startActivity(intent);
+                //gameClient.
                 Log.e("SL","开始游戏");
             }
         });
@@ -193,8 +200,11 @@ public class RoomActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e("SL","销毁房间");
-        gameServer.end();
-        gameServer = null;
+        if (gameServer != null) {
+            gameServer.end();
+            gameServer = null;
+        }
+        gameClient.close();
         gameClient = null;
         uName = "";
         uIp = "";

@@ -57,7 +57,7 @@ public class ServerThread extends Thread {
                 switch (str) {
                     case "start":
                         //游戏开始,通知其他客户端
-                        pushOther(index + ":" + "start");
+                        pushOther("start");
                         //游戏开始，开始准备游戏数据
                         control.beginGame();
                         //发送地图

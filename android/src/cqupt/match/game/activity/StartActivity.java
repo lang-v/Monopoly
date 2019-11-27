@@ -1,5 +1,6 @@
 package cqupt.match.game.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,12 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import cqupt.match.game.R;
 import cqupt.match.game.resource.Res;
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends Activity {
 
     //把姓名和ip存储到本地xml文件
     private SharedPreferences preferences;

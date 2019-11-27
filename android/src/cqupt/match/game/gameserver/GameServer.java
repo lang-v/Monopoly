@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.Random;
 
 import cqupt.match.game.activity.RoomActivity;
+import cqupt.match.game.resource.Res;
 
 
 /**
@@ -17,23 +18,17 @@ import cqupt.match.game.activity.RoomActivity;
  * @author Frontman
  */
 public class GameServer extends ServerSocket {
-    public static final int PORT = 1999;    /**端口号*/
-    public static int number = 1;           /**房间人数,初始只有房主一个人*/
-    public boolean gaming = false;          /**是否正在游戏中*/
-    public static ServerThread[] client = new ServerThread[6];    /**客户端对象数组*/
-    public static int[] map = new int[20];                        /**地图*/
+    private static int number = 1;           /**房间人数,初始只有房主一个人*/
+    private boolean gaming = false;          /**是否正在游戏中*/
+    private static ServerThread[] client = new ServerThread[6];    /**客户端对象数组*/
+    private static int[] map = new int[20];                        /**地图*/
 
-    /**格子属性*/
-    public final int JUDGE = 1;             /**问题*/
-    public final int BLOOD = 2;             /**加血包*/
-    public final int MINE = 3;              /**地雷*/
-    public final int PROP = 4;              /**道具框*/
 
     //增加或减少玩家
-    OnAddPlayer addPlayer;
+    private OnAddPlayer addPlayer;
 
     public GameServer(OnAddPlayer addPlayer) throws IOException {
-        super(PORT);
+        super(Res.PORT);
         this.addPlayer = addPlayer;
     }
 
@@ -49,8 +44,9 @@ public class GameServer extends ServerSocket {
                     PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     //初次连接 读取名字
-                    out.println(RoomActivity.getuName());
                     String name = in.readLine();
+                    //返回给客户端编号
+                    out.println(++number);
                     addPlayer.addPlayer(name);
                     client[number-1] = new ServerThread(socket, number, new GameControl() {
                         @Override
@@ -120,21 +116,21 @@ public class GameServer extends ServerSocket {
      */
     public void initMap() {
         //设置道具格
-        map[6] = PROP;
-        map[10] = PROP;
-        map[16] = PROP;
+        map[6] = Res.Proper.RANDOM;
+        map[10] = Res.Proper.RANDOM;
+        map[16] = Res.Proper.RANDOM;
 
         //随机生成问题格
-        map[getRandom()] = JUDGE;
-        map[getRandom()] = JUDGE;
+        map[getRandom()] = Res.Proper.QUESTION;
+        map[getRandom()] = Res.Proper.QUESTION;
 
         //随机生成地雷
-        map[getRandom()] = MINE;
-        map[getRandom()] = MINE;
+        map[getRandom()] = Res.Proper.MINE;
+        map[getRandom()] = Res.Proper.MINE;
 
         //随机生成两个加血格
-        map[getRandom()] = BLOOD;
-        map[getRandom()] = BLOOD;
+        map[getRandom()] = Res.Proper.BLOOD;
+        map[getRandom()] = Res.Proper.BLOOD;
     }
 
     /**

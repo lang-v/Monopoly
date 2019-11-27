@@ -4,12 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import cqupt.match.game.Monopoly;
+import cqupt.match.game.stage.DiceStage;
+import cqupt.match.game.stage.GameStage;
 
 public class GameScreen extends ScreenAdapter {
 
     private Monopoly mainGame;
+    private GameStage gameStage;
+    private DiceStage diceStage;
 
     public GameScreen(Monopoly mainGame) {
         this.mainGame = mainGame;
@@ -17,7 +22,26 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void init() {
+        gameStage = new GameStage(mainGame,new StretchViewport(
+                mainGame.getWorldWidth(),
+                mainGame.getWorldHeight()
+        ));
+        diceStage = new DiceStage(mainGame,new StretchViewport(
+                mainGame.getWorldWidth(),
+                mainGame.getWorldHeight()
+        ));
 
+        gameStage.setVisible(true);
+        Gdx.input.setInputProcessor(gameStage);
+    }
+
+    public void setShowDiceStage(boolean visible){
+        diceStage.setVisible(visible);
+        if (visible){
+            Gdx.input.setInputProcessor(diceStage);
+        }else {
+            Gdx.input.setInputProcessor(gameStage);
+        }
     }
 
     //绘制游戏
@@ -27,5 +51,11 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        gameStage.act();
+        gameStage.draw();
+        if (diceStage.isVisible()){
+            diceStage.act();
+            diceStage.draw();
+        }
     }
 }

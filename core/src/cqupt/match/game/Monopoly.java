@@ -14,6 +14,8 @@ public class Monopoly extends Game {
 	private float worldWidth;
 	private float worldHeight;
 
+	//玩家人数
+	private int number = 0;
 	//游戏场景
 	private GameScreen gameScreen;
 
@@ -24,6 +26,11 @@ public class Monopoly extends Game {
 	//位图字体资源
 	private BitmapFont bitmapFont;
 
+
+	public Monopoly(int number){
+		this.number = number;
+	}
+
 	public void init(){
 		//初始化游戏世界大小
 		worldWidth = Res.FIX_WORLD_WIDTH;
@@ -31,12 +38,13 @@ public class Monopoly extends Game {
 
 		//加载资源
 		assetManager = new AssetManager();
-		//assetManager.load(Res.ATLAS_PATH,TextureAtlas.class);
+		assetManager.load(Res.ATLAS_PATH,TextureAtlas.class);
 		assetManager.load(Res.BITMAP_FONT_PATH, BitmapFont.class);
 		//等待资源加载完毕
 		assetManager.finishLoading();
 
 		bitmapFont = assetManager.get(Res.BITMAP_FONT_PATH);
+		textureAtlas = assetManager.get(Res.ATLAS_PATH);
 		gameScreen = new GameScreen(this);
 		//设置游戏场景
 		setScreen(gameScreen);
@@ -71,6 +79,9 @@ public class Monopoly extends Game {
 		init();
 	}
 
+	public int getNumber() {
+		return number;
+	}
 
 	@Override
 	public void dispose () {
