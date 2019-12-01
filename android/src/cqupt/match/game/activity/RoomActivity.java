@@ -12,16 +12,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import cqupt.match.game.AndroidLauncher;
 import cqupt.match.game.R;
 import cqupt.match.game.adapter.PlayerNameAdapter;
+import cqupt.match.game.gameclient.CommandCallBack;
 import cqupt.match.game.getlocalhost.NetWorkUtil;
 import cqupt.match.game.playeritem.PlayerItem;
 import cqupt.match.game.gameclient.GameClient;
@@ -29,7 +26,8 @@ import cqupt.match.game.gameserver.GameServer;
 import cqupt.match.game.gameserver.OnAddPlayer;
 import cqupt.match.game.resource.Res;
 
-public class RoomActivity extends Activity {
+
+public class RoomActivity extends Activity implements CommandCallBack {
 
     //服务器实例
     private GameServer gameServer = null;
@@ -54,6 +52,7 @@ public class RoomActivity extends Activity {
     //是否开启服务端
     private static boolean isServer = false;
 
+    Context context;
     //更新UI
     private static Handler handler = new Handler(){
         @Override
@@ -93,6 +92,7 @@ public class RoomActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
+        context = this;
         init();
     }
 
@@ -105,7 +105,6 @@ public class RoomActivity extends Activity {
         players = new ArrayList<>();
         listView = findViewById(R.id.player_list);
         adapter = new PlayerNameAdapter(this, R.layout.palyer_item, players,addPlayerCallBack);
-        players.add(new PlayerItem("s",1));
         listView.setAdapter(adapter);
         if ("".equals(uIp)) {//服务器在本地的情况
             new Thread(new Runnable() {
@@ -129,7 +128,7 @@ public class RoomActivity extends Activity {
                 public void run() {
                     try {
                         gameServer = new GameServer(addPlayerCallBack);
-                        gameClient = new GameClient(getuName(),"127.0.0.1");
+                        gameClient = new GameClient(getuName(),"127.0.0.1",null);
                     } catch (IOException e) {
                         Log.e("SL","未能成功开启服务");
                     }
@@ -139,7 +138,7 @@ public class RoomActivity extends Activity {
             listenTask.start();
         } else {
             if (gameClient == null)
-                gameClient = new GameClient(uName,uIp);
+                gameClient = new GameClient(uName,uIp,null);
             TextView text_ip = findViewById(R.id.room_number);
             text_ip.setText(uIp);
         }
@@ -155,6 +154,7 @@ public class RoomActivity extends Activity {
                 Intent intent = new Intent(context, AndroidLauncher.class);
                 Log.e("SL",players.size()+"");
                 intent.putExtra(Res.PLAYER_NUMBER,players.size());
+                gameClient.sendMsg("start");
                 startActivity(intent);
                 //gameClient.
                 Log.e("SL","开始游戏");
@@ -215,5 +215,25 @@ public class RoomActivity extends Activity {
             listenTask.interrupt();
             listenTask = null;
         }
+    }
+
+    @Override
+    public void move(int index, int target) {
+
+    }
+
+    @Override
+    public void end() {
+
+    }
+
+    @Override
+    public void start() {
+        Intent intent = new Intent(context, AndroidLauncher.class);
+        Log.e("SL",players.size()+"");
+        intent.putExtra(Res.PLAYER_NUMBER,players.size());
+        startActivity(intent);
+        //gameClient.
+        Log.e("SL","开始游戏");
     }
 }

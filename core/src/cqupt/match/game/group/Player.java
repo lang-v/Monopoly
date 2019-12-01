@@ -1,5 +1,6 @@
 package cqupt.match.game.group;
 
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
@@ -15,8 +16,9 @@ public class Player extends BaseGroup {
     private Image image;
     private String name = "";
     private float x = 0,y=0;
-    private int index = -1;
+    private int index = 0;
     private int currentPosition = 0;
+    boolean iiFirst = true;
     private boolean isFirst = true;
 
     public Player(Monopoly mainGame, String name, int index){
@@ -43,10 +45,26 @@ public class Player extends BaseGroup {
     }
 
     public void move(CardGroup cardGroup){
-        System.out.println("SL: x="+getX()+"to x="+cardGroup.getX()+" y="+getY()+"to y="+cardGroup.getY()+" width="+cardGroup.getWidth()+"height="+cardGroup.getHeight());
         MoveToAction move = Actions.moveTo(cardGroup.getX()+cardGroup.getWidth()+3,cardGroup.getY()+cardGroup.getHeight()/2-15,1.0f);
         addAction(move);
-        System.out.println("SL: x="+getX()+"to x="+cardGroup.getX()+" y="+getY()+"to y="+cardGroup.getY()+" width="+cardGroup.getWidth()+"height="+cardGroup.getHeight());
+    }
+
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition += currentPosition;
+    }
+
+    public int getCurrentPosition() {
+        if (iiFirst) {
+            iiFirst = false;
+            currentPosition--;
+        }
+        System.out.println("位置："+currentPosition);
+        return currentPosition;
+    }
+
+    @Override
+    public void addAction(final Action action) {
+        super.addAction(action);
     }
 
     @Override

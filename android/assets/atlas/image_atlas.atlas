@@ -4,96 +4,103 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+39308A78971D7A438A0E4DAA605126AE
+  rotate: false
+  xy: 2, 484
+  size: 900, 524
+  orig: 900, 524
+  offset: 0, 0
+  index: -1
 bg_black
   rotate: false
-  xy: 2, 2
+  xy: 904, 907
   size: 100, 101
   orig: 100, 101
   offset: 0, 0
   index: -1
 bg_small
   rotate: false
-  xy: 2, 509
+  xy: 2, 2
   size: 853, 480
   orig: 853, 480
   offset: 0, 0
   index: -1
+
+image_atlas2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 board_blood
   rotate: false
-  xy: 2, 307
+  xy: 2, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 board_common
   rotate: false
-  xy: 2, 105
+  xy: 2, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 board_first
   rotate: false
-  xy: 204, 307
+  xy: 204, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 board_mine
   rotate: false
-  xy: 204, 105
+  xy: 2, 406
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 board_question
   rotate: false
-  xy: 406, 307
+  xy: 204, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 board_random
   rotate: false
-  xy: 406, 105
+  xy: 406, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 board_start
   rotate: false
-  xy: 608, 307
+  xy: 2, 204
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 player_five
   rotate: false
-  xy: 608, 105
+  xy: 204, 406
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 player_four
   rotate: false
-  xy: 810, 307
+  xy: 406, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 player_one
   rotate: false
-  xy: 810, 105
+  xy: 608, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
-
-image_atlas2.png
-size: 1024,256
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
 player_seven
   rotate: false
   xy: 2, 2
@@ -103,21 +110,21 @@ player_seven
   index: -1
 player_six
   rotate: false
-  xy: 204, 2
+  xy: 204, 204
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 player_three
   rotate: false
-  xy: 406, 2
+  xy: 406, 406
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 player_two
   rotate: false
-  xy: 608, 2
+  xy: 608, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0

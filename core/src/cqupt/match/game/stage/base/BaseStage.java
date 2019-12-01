@@ -15,6 +15,9 @@ public class BaseStage extends Stage {
         this.mainGame = mainGame;
     }
 
+    public BaseStage(Monopoly mainGame) {
+    }
+
     public void setVisible(boolean visible) {
         isVisible = visible;
     }

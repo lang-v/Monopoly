@@ -40,12 +40,33 @@ public class ClientThread extends Thread {
         while (!isInterrupted()){
             try {
                 String command = in.readLine();
-                if (!"".equals(command)){
-                    commandCallBack.getCommand(command);
-                }
+                choose(command);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
+    private void choose(String cmd){
+        System.out.println("cmd="+cmd);
+        switch (cmd){
+            case "start":
+                commandCallBack.start();
+                break;
+            case "end":
+                commandCallBack.end();
+                default:
+                    break;
+        }
+    }
 }
+
+
+//
+//        case "1":
+//        case "2":
+//        case "3":
+//        case "4":
+//        case "5":
+//        case "6":

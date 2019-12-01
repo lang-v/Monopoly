@@ -35,11 +35,15 @@ public class CardGroup extends BaseGroup {
 
     private void setBgImage(int proper) {
         //初始地板
-        if (bgImage == null) {
+        if (!isShow) {
             proper = Res.Proper.FIRST;
         } else {
             removeActor(bgImage);
         }
+        if (this.proper == Res.Proper.START){
+            proper = this.proper;
+        }
+
         switch (proper) {
             case Res.Proper.FIRST:
                 bgImage = new Image(getMainGame().getTextureAtlas().findRegion(Res.Atlas.FIRST_BOARD));
@@ -95,9 +99,5 @@ public class CardGroup extends BaseGroup {
     @Override
     public float getWidth() {
         return width;
-    }
-
-    public boolean isShow() {
-        return isShow;
     }
 }

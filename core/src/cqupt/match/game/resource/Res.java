@@ -58,9 +58,11 @@ public interface Res {
      * 纹理图集的小图名称常量
      */
     interface Atlas {
+
         //背景图片
         String BG_LOGO = "bg_small";
         String BG_BLACK = "bg_black";
+        String HELP = "39308A78971D7A438A0E4DAA605126AE";
 
         String COMMON_BOARD = "board_common";
         String QUESTION_BOARD = "board_question";

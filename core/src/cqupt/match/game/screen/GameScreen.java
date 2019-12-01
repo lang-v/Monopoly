@@ -9,12 +9,14 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import cqupt.match.game.Monopoly;
 import cqupt.match.game.stage.DiceStage;
 import cqupt.match.game.stage.GameStage;
+import cqupt.match.game.stage.HelpStage;
 
 public class GameScreen extends ScreenAdapter {
 
     private Monopoly mainGame;
     private GameStage gameStage;
     private DiceStage diceStage;
+    private HelpStage helpStage;
 
     public GameScreen(Monopoly mainGame) {
         this.mainGame = mainGame;
@@ -27,6 +29,11 @@ public class GameScreen extends ScreenAdapter {
                 mainGame.getWorldHeight()
         ));
         diceStage = new DiceStage(mainGame,new StretchViewport(
+                mainGame.getWorldWidth(),
+                mainGame.getWorldHeight()
+        ));
+
+        helpStage = new HelpStage(mainGame,new StretchViewport(
                 mainGame.getWorldWidth(),
                 mainGame.getWorldHeight()
         ));
@@ -44,6 +51,23 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    public void setShowHelpStage(boolean visible){
+        helpStage.setVisible(visible);
+        if (visible){
+            Gdx.input.setInputProcessor(helpStage);
+        }else {
+            Gdx.input.setInputProcessor(gameStage);
+        }
+    }
+
+    public DiceStage getDiceStage() {
+        return diceStage;
+    }
+
+    public GameStage getGameStage() {
+        return gameStage;
+    }
+
     //绘制游戏
     @Override
     public void render(float delta) {
@@ -56,6 +80,10 @@ public class GameScreen extends ScreenAdapter {
         if (diceStage.isVisible()){
             diceStage.act();
             diceStage.draw();
+        }
+        if(helpStage.isVisible()){
+            helpStage.act();
+            helpStage.draw();
         }
     }
 }

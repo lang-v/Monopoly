@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".activity.RoomActivity"/>
         <activity
-            android:name=".AndroidLauncher"
+            android:name=".activity.AndroidLauncher"
             android:screenOrientation="landscape"/>
     </application>
 

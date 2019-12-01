@@ -1,5 +1,7 @@
 package cqupt.match.game.gameclient;
 
 public interface CommandCallBack {
-    void getCommand(String command);
+    void move(int index,int target);
+    void end();
+    void start();
 }

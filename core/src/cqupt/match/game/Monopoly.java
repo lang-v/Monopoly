@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import cqupt.match.game.resource.Res;
 import cqupt.match.game.screen.GameScreen;
+import cqupt.match.game.stage.GameStage;
 
 public class Monopoly extends Game {
 	//世界的宽高
@@ -16,6 +17,8 @@ public class Monopoly extends Game {
 
 	//玩家人数
 	private int number = 0;
+	//自己的标识符
+	private int index = -1;
 	//游戏场景
 	private GameScreen gameScreen;
 
@@ -26,9 +29,9 @@ public class Monopoly extends Game {
 	//位图字体资源
 	private BitmapFont bitmapFont;
 
-
-	public Monopoly(int number){
+	public Monopoly(int index,int number){
 		this.number = number;
+		this.index = index;
 	}
 
 	public void init(){
@@ -81,6 +84,10 @@ public class Monopoly extends Game {
 
 	public int getNumber() {
 		return number;
+	}
+
+	public int getIndex() {
+		return index;
 	}
 
 	@Override

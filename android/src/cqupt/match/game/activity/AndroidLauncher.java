@@ -1,4 +1,4 @@
-package cqupt.match.game;
+package cqupt.match.game.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.Toast;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
+import cqupt.match.game.Monopoly;
+import cqupt.match.game.gameclient.GameClient;
 import cqupt.match.game.resource.Res;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -20,6 +22,6 @@ public class AndroidLauncher extends AndroidApplication {
 			Toast.makeText(this, "未知错误，请重新进入游戏", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		initialize(new Monopoly(number), config);
+		initialize(new Monopoly(GameClient.getIndex(),number), config);
 	}
 }

@@ -18,7 +18,7 @@ import cqupt.match.game.resource.Res;
  * @author Frontman
  */
 public class GameServer extends ServerSocket {
-    private static int number = 1;           /**房间人数,初始只有房主一个人*/
+    private static int number = -1;           /**房间人数,初始只有房主一个人*/
     private boolean gaming = false;          /**是否正在游戏中*/
     private static ServerThread[] client = new ServerThread[6];    /**客户端对象数组*/
     private static int[] map = new int[20];                        /**地图*/
@@ -48,7 +48,7 @@ public class GameServer extends ServerSocket {
                     //返回给客户端编号
                     out.println(++number);
                     addPlayer.addPlayer(name);
-                    client[number-1] = new ServerThread(socket, number, new GameControl() {
+                    client[number] = new ServerThread(socket, number, new GameControl() {
                         @Override
                         public void beginGame() {
                             begin();

@@ -45,6 +45,9 @@ public class MidGroup extends BaseGroup {
                 }
             }
         }
+
+
+
         List<Player> players = new ArrayList<>();
         for (int i=0;i<getMainGame().getNumber();i++){
             players.add(new Player(getMainGame(),"",i));
@@ -64,6 +67,8 @@ public class MidGroup extends BaseGroup {
     }
 
     public CardGroup getCardGroups(int index) {
+        while (index>20)
+            index/=20;
         CardGroup card = cardGroups[index/5][index%5];
         card.setShow();
         return card;
