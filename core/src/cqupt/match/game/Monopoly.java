@@ -10,6 +10,8 @@ import cqupt.match.game.resource.Res;
 import cqupt.match.game.screen.GameScreen;
 import cqupt.match.game.stage.GameStage;
 
+import static cqupt.match.game.resource.Res.FONT_CHARACTERS;
+
 public class Monopoly extends Game {
 	//世界的宽高
 	private float worldWidth;
@@ -47,6 +49,8 @@ public class Monopoly extends Game {
 		assetManager.finishLoading();
 
 		bitmapFont = assetManager.get(Res.BITMAP_FONT_PATH);
+//		bitmapFont = TrueTypeFontFactory.createBitmapFont(Gdx.files.internal("font.ttf"), FONT_CHARACTERS, 12.5f, 7.5f, 1.0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
 		textureAtlas = assetManager.get(Res.ATLAS_PATH);
 		gameScreen = new GameScreen(this);
 		//设置游戏场景

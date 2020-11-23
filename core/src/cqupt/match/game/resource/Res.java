@@ -1,5 +1,7 @@
 package cqupt.match.game.resource;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 /**
  * 常量，资源文件目录
  */
@@ -35,7 +37,7 @@ public interface Res {
      * 位图字体路径
      */
     String BITMAP_FONT_PATH = "font/font.fnt";
-
+    String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
     /**
      * 纹理图集路径
      */
